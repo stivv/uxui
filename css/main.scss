@@ -20,6 +20,14 @@ $border-radius:15px;
     @return map-get($padding, $padding-type)
 };
 
+$desktop: 840px;
+
+@mixin desktop {
+    @media( min-width: #{$desktop} ) {
+        @content;
+    }
+}
+
 html, body {
     height: 100%;
 }
@@ -34,6 +42,10 @@ body {
         height: 100%;
         position: absolute;
         z-index: -1;
+
+        @include desktop {
+            clip-path: polygon(0 0, 85% 0, 67% 100%, 0% 100%);
+        }
     }
 
     header a {
@@ -46,6 +58,13 @@ body {
 }
 
 main {
+    @include desktop {
+        display: grid;
+        grid-template-columns: 50% auto;
+        grid-template: 
+            "primary card";
+    }
+
     section#card{
         background: color(white);
         padding: 20px;
@@ -53,6 +72,13 @@ main {
         border-radius: $border-radius;
         width: 80%;
         box-shadow: 0 10px 30px rgba(0,0,0,.2);
+
+        @include desktop {
+            grid-area: card;
+            height: fit-content;
+            align-self: center;
+            margin: 1em;
+        }
 
         ul{
             list-style: none;
@@ -85,10 +111,22 @@ main {
         padding: padding(default);
         text-align: center;
 
+        @include desktop {
+            grid-area: primary;
+            text-align: left;
+            margin: 4em 0 0 4em;
+        }
+
         h1 {
             font-size: 3em;
             margin-top: 10px;
             text-transform: uppercase;
+
+            @include desktop {
+                font-size: 4em;
+                line-height: .9em;
+                width: 30%;
+            }
         }
 
         a {
@@ -102,6 +140,11 @@ main {
             text-transform: uppercase;
             display: block;
             font-weight: bold;
+
+            @include desktop {
+                display: inline-block;
+                padding: padding(default) padding(default) * 4;
+            }
         }
     }
 }
